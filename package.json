@@ -1,0 +1,20 @@
+{
+  "name": "@satel/shopify-app-history",
+  "version": "0.0.1",
+  "description": "",
+  "source": "history.mjs",
+  "main": "dist/history.js",
+  "umd:main": "dist/history.umd.js",
+  "module": "dist/history.m.js",
+  "license": "MIT",
+  "author": "Quinn Blenkinsop <quinn@qw-in.com>",
+  "scripts": {
+    "build": "microbundle --external none"
+  },
+  "dependencies": {
+    "history": "^4.7.2"
+  },
+  "devDependencies": {
+    "microbundle": "^0.6.0"
+  }
+}

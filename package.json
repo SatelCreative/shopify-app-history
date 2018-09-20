@@ -2,7 +2,6 @@
   "name": "@satel/shopify-app-history",
   "version": "1.0.0-beta.1",
   "description": "Sync history in Shopify embedded apps",
-  "description": "Authentication & Validation for Shopify Apps",
   "keywords": [
     "shopify",
     "react-router",

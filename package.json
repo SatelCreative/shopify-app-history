@@ -1,7 +1,15 @@
 {
   "name": "@satel/shopify-app-history",
-  "version": "0.0.1",
-  "description": "",
+  "version": "1.0.0-beta.1",
+  "description": "Sync history in Shopify embedded apps",
+  "description": "Authentication & Validation for Shopify Apps",
+  "keywords": [
+    "shopify",
+    "react-router",
+    "embedded",
+    "easdk",
+    "polaris"
+  ],
   "source": "history.mjs",
   "main": "dist/history.js",
   "umd:main": "dist/history.umd.js",

@@ -32,7 +32,47 @@ Configure:
 const history = createHistory({ easdk }, myHistoryConfiguration);
 ```
 
-## React Router
+## Polaris Example
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import { Router } from 'react-router-dom';
+import { AppProvider } from '@shopify/polaris';
+import createHistory from '@satel/shopify-app-history';
+import App from './App';
+
+const ShopifyRouter = (({ children }, { easdk }) => {
+  const history = createHistory({ easdk });
+  return (
+    <Router history={history}>
+      {children}
+    </Router>
+  );
+});
+
+// This tells react to bind the context
+ShopifyRouter.contextTypes = { easdk: PropTypes.any };
+
+ReactDOM.render(
+  <AppProvider
+    apiKey="shh"
+    shopOrigin="https://example.myshopify.com"
+  >
+    <ShopifyRouter>
+      <App />
+    </ShopifyRouter>
+  </AppProvider>,
+  document.getElementById('root'),
+);
+```
+
+## EASDK Example
+```html
+<!-- Include the EASDK -->
+<script src="https://cdn.shopify.com/s/assets/external/app.js"></script>
+```
+
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -40,18 +80,25 @@ import { Router } from 'react-router-dom';
 import createHistory from '@satel/shopify-app-history';
 import App from './App';
 
-// TODO show usage with @shopify/polaris
+const history = createHistory({
+  easdk: window.ShopifyApp,
+});
 
-const history = createHistory({ easdk }, args);
+window.ShopifyApp.init({
+  apiKey: "shh",
+  shopOrigin: "https://example.myshopify.com",
+});
 
-ReactDOM.render(
-  <Router history={history}>
-    <App />
-  </Router>,
-  document.getElementById('root'),
-);
+window.ShopifyApp.ready(() => {
+  ReactDOM.render(
+    <Router history={history}>
+      <App />
+    </Router>,
+    document.getElementById('root'),
+  );
+});
 ```
 
 ### Implementation
 
-It is just tiny wrapper around [`createBrowserHistory`](https://github.com/ReactTraining/history) that makes calls to `easdk.replaceState()` when necessary.
+It is just tiny wrapper around [`createBrowserHistory`](https://github.com/ReactTraining/history) that makes calls to `easdk.replaceState()` or `easdk.messenger.send()` depending on which library is used.

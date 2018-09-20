@@ -10,8 +10,9 @@ import { createBrowserHistory } from 'history';
 export default ({ easdk }, ...args) => {
   const history = createBrowserHistory(...args);
 
-  history.listen(({ pathname }, action) => {
+  history.listen(({ pathname, search, hash }, action) => {
     if (action === 'PUSH') {
+      const location = `${pathname}${search}${hash}`;
       /*
        * @shopify/polaris removed the .replaceState method
        * exposed by the standalone ShopifyApp umd build.
@@ -20,9 +21,9 @@ export default ({ easdk }, ...args) => {
        * but otherwise the replaceState method works
        */
       if (easdk.messenger) {
-        easdk.messenger.send('Shopify.API.replaceState', { location: pathname })
+        easdk.messenger.send('Shopify.API.replaceState', { location })
       } else {
-        easdk.replaceState(pathname);
+        easdk.replaceState(location);
       }
     }
   });

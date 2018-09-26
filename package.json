@@ -1,6 +1,6 @@
 {
   "name": "@satel/shopify-app-history",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Sync history in Shopify embedded apps",
   "keywords": [
     "shopify",
@@ -17,9 +17,6 @@
   "author": "Quinn Blenkinsop <quinn@qw-in.com>",
   "scripts": {
     "build": "microbundle --external none"
-  },
-  "dependencies": {
-    "history": "^4.7.2"
   },
   "devDependencies": {
     "microbundle": "^0.6.0"

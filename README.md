@@ -15,21 +15,16 @@ Install:
 Import:
 
 ```js
-// using es modules
-import createHistory from '@satel/shopify-app-history';
-
-// using cjs modules
-const createHistory = require('@satel/shopify-app-history');
+import { createBrowserHistory } from 'history';
+import syncHistory from '@satel/shopify-app-history';
 ```
 
 Initialize:
 ```js
-const history = createHistory({ easdk });
-```
-
-Configure:
-```js
-const history = createHistory({ easdk }, myHistoryConfiguration);
+const history = createHistory({
+  easdk,
+  history: createBrowserHistory(),
+});
 ```
 
 ## Polaris Example
@@ -39,11 +34,15 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Router } from 'react-router-dom';
 import { AppProvider } from '@shopify/polaris';
-import createHistory from '@satel/shopify-app-history';
+import syncHistory from '@satel/shopify-app-history';
+import history from './path/to/custom/history';
 import App from './App';
 
 const ShopifyRouter = (({ children }, { easdk }) => {
-  const history = createHistory({ easdk });
+  const history = syncHistory({
+    easdk,
+    history,
+  });
   return (
     <Router history={history}>
       {children}
@@ -52,7 +51,7 @@ const ShopifyRouter = (({ children }, { easdk }) => {
 });
 
 // This tells react to bind the context
-ShopifyRouter.contextTypes = { easdk: PropTypes.any };
+ShopifyRouter.contextTypes = { easdk: PropTypes.any.isRequired };
 
 ReactDOM.render(
   <AppProvider
@@ -77,11 +76,13 @@ ReactDOM.render(
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
-import createHistory from '@satel/shopify-app-history';
+import syncHistory from '@satel/shopify-app-history';
+import history from './path/to/custom/history';
 import App from './App';
 
-const history = createHistory({
+syncHistory({
   easdk: window.ShopifyApp,
+  history,
 });
 
 window.ShopifyApp.init({
@@ -101,4 +102,4 @@ window.ShopifyApp.ready(() => {
 
 ### Implementation
 
-It is just tiny wrapper around [`createBrowserHistory`](https://github.com/ReactTraining/history) that makes calls to `easdk.replaceState()` or `easdk.messenger.send()` depending on which library is used.
+It is just tiny wrapper around [`history`](https://github.com/ReactTraining/history) that makes calls to `easdk.replaceState()` or `easdk.messenger.send()` depending on which library is used.

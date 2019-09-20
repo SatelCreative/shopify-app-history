@@ -1,3 +1,7 @@
+# Deprecation Notice
+
+Use Shopify's [react-shopify-app-route-propagator](https://github.com/Shopify/quilt/tree/master/packages/react-shopify-app-route-propagator) instead
+
 # Shopify App History
 
 While attempting to use [`react-router`](https://github.com/ReactTraining/react-router) to handle routing in embedded [Shopify](https://www.shopify.ca/) apps we noticed that `window.top.location` was not staying in sync with `window.location`. This package attempts to solve that problem.
